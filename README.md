@@ -3,6 +3,7 @@
 2. Run the run.py script.
 3. Open `localhost` with the port number `5000`.
 
+
 ### Notes:
 This was tested on Python 3.8.6 64bit on a Windows machine.
 
