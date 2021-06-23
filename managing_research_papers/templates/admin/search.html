@@ -1,0 +1,104 @@
+{% extends "admin/base.html" %}
+
+{% block main %}
+
+{% if pending_posts %}
+  {% for post in pending_posts %}
+
+  <div class="bg-light p-5">
+  {% if post.language == "English" %}
+  <h1 style="display: inline;">{{ post.title }}</h1>
+
+  <span class="fw-lighter text-secondary" style="margin-left: 5px;">Pending</span>
+
+  <p class="fw-lighter text-secondary fst-italic">
+    {{ post.poster_name }} {{ post.poster_lastname }},
+
+    {{ post.publish_date.strftime("%b %d %Y") }}
+  </p>
+  <p class="lh-base fw-normal">
+    {% if post.abstract|length > 500 %}
+    {{ post.abstract[:500] }}...
+    {% else %}
+    {{ post.abstract }}
+    {% endif %}
+  </p>
+
+  {% elif post.language == "Farsi" %}
+
+  <div dir="rtl">
+    <h1 style="display: inline-block;">{{ post.title }}</h1>
+
+    <span class="fw-lighter text-secondary" style="margin-right: 5px;">Pending</span>
+  </div>
+
+  <p class="fw-lighter text-secondary fst-italic" dir="rtl">
+    {{ post.poster_name }} {{ post.poster_lastname }}،
+
+    {{ post.publish_date.strftime("%b %d %Y") }}
+  </p>
+  <p class="lh-base fw-normal" dir="rtl">
+    {% if post.abstract|length > 500 %}
+    {{ post.abstract[:500] }}...
+    {% else %}
+    {{ post.abstract }}
+    {% endif %}
+  </p>
+
+  {% endif %}
+
+  <a href="{{ url_for('admin_post', status='pending', id=post.id) }}">Read more</a>
+
+  </div>
+
+  {% endfor %}
+
+{% endif %}
+
+
+
+
+
+{% for post in posts %}
+
+<div class="bg-light p-5">
+  {% if post.language == "English" %}
+  <h1 style="display: inline-block;">{{ post.title }}</h1>
+  <p class="fw-lighter text-secondary fst-italic">
+    {{ post.poster_name }} {{ post.poster_lastname }},
+
+    {{ post.publish_date.strftime("%b %d %Y") }}
+  </p>
+  <p class="lh-base fw-normal">
+    {% if post.abstract|length > 500 %}
+    {{ post.abstract[:500] }}...
+    {% else %}
+    {{ post.abstract }}
+    {% endif %}
+  </p>
+
+  {% elif post.language == "Farsi" %}
+
+  <h1 dir="rtl">{{ post.title }}</h1>
+  <p class="fw-lighter text-secondary fst-italic" dir="rtl">
+    {{ post.poster_name }} {{ post.poster_lastname }}،
+
+    {{ post.publish_date.strftime("%b %d %Y") }}
+  </p>
+  <p class="lh-base fw-normal" dir="rtl">
+    {% if post.abstract|length > 500 %}
+    {{ post.abstract[:500] }}...
+    {% else %}
+    {{ post.abstract }}
+    {% endif %}
+  </p>
+
+  {% endif %}
+  
+  <a href="{{ url_for('admin_post', status='current', id=post.id) }}">Read more</a>
+
+</div>
+
+{% endfor %}
+
+{% endblock %}

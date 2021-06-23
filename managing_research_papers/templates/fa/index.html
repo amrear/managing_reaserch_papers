@@ -1,0 +1,48 @@
+{% extends "fa/base.html" %}
+
+{% block main %}
+
+<!-- Go through posts -->
+{% for post in posts %}
+<div class="bg-light p-5">
+
+  <!-- View the contents left to right or right to left based on the language -->
+  {% if post.language == "English" %}
+  <h1 dir="ltr">{{ post.title }}</h1>
+
+  <p class="fw-lighter text-secondary fst-italic" dir="ltr">
+    {{ post.poster_name }} {{ post.poster_lastname }},
+
+    {{ post.publish_date.strftime("%b %d %Y") }}
+  </p>
+  <p class="lh-base fw-normal" dir="ltr">
+    {% if post.abstract|length > 500 %}
+    {{ post.abstract[:500] }}...
+    {% else %}
+    {{ post.abstract }}
+    {% endif %}
+  </p>
+
+  {% elif post.language == "Farsi" %}
+
+  <h1>{{ post.title }}</h1>
+
+  <p class="fw-lighter text-secondary fst-italic">
+    {{ post.poster_name }} {{ post.poster_lastname }}، 
+
+    {{ post.publish_date.strftime("%b %d %Y") }}
+  </p>
+  <p class="lh-base fw-normal">
+    {% if post.abstract|length > 500 %}
+    {{ post.abstract[:500] }}...
+    {% else %}
+    {{ post.abstract }}
+    {% endif %}
+  </p>
+  {% endif %}
+  <a href="{{ url_for('post', id=post.id) }}" dir="rtl">بیشتر</a>
+</div>
+
+{% endfor %}
+
+{% endblock %}

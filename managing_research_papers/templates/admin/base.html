@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en" class="h-100">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{ title }}</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="{{ url_for('static', filename='bootstrap-5.0.1/css/bootstrap.min.css') }}" rel="stylesheet">
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+
+  {% block head %}
+  {% endblock %}
+
+</head>
+
+<body class="d-flex flex-column h-100" style="padding-top: 4.5rem;">
+
+  <header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="{{ url_for('admin_index', status='current') }}">Admin</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('admin_index', status='pending') }}">Pending</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('admin_index', status='current') }}">Current</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('admin_submit') }}">New</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('admin_logout') }}">Log out</a>
+            </li>
+          </ul>
+        </div>
+
+        <form class="d-flex" method="GET", action="{{ url_for('admin_search') }}">
+          <input class="form-control me-2" type="search" placeholder="Type here" aria-label="Search" name="q" value="{{ q if q else '' }}">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Begin page content -->
+  <main class="flex-shrink-0">
+    <div class="container">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      {% for category, messege in messages %}
+      <div class="alert alert-{{ category }} flashed-message" role="alert">
+        {{ messege }}
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+
+      {% block main %}
+      {% endblock %}
+    </div>
+  </main>
+
+  <div style="padding: 0.5rem;"></div>
+
+  <script src="{{ url_for('static', filename='bootstrap-5.0.1/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='fadeOut.js') }}"></script>
+
+</body>
+
+</html>

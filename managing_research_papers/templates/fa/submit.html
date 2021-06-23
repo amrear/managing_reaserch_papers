@@ -1,0 +1,326 @@
+{% extends "fa/base.html" %}
+{% block main %}
+
+<div style="max-width: 768px; margin: auto;">
+  <form method="POST" action="" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+    <div class="form-group">
+      {{ form.title.label }}:
+      {% if form.title.errors %}
+      {{ form.title(class="form-control is-invalid", placeholder="عنوان مقاله خود را وارد کنید") }}
+      {% for error in form.title.errors %}
+      <div class="invalid-feedback">
+        {{ error }}
+      </div>
+      {% endfor %}
+      {% else %}
+      {{ form.title(class="form-control", placeholder="عنوان مقاله خود را وارد کنید") }}
+      {% endif %}
+    </div>
+
+    <div style="margin-top: 10px;"></div>
+
+    {{ form.publish_date.label }}:
+    &nbsp; &nbsp;
+    {{ form.publish_date }}
+
+    {% if form.publish_date.errors %}
+    {% for error in form.publish_date.errors %}
+    <div class="text-danger">
+      <small>{{ error }}</small>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div style="margin-top: 10px;"></div>
+
+    <div>
+      {{ form.journal_type.label }}:
+      &nbsp; &nbsp;
+      {% for subfield in form.journal_type %}
+      <div class="form-check form-check-inline">
+        {{ subfield(class="form-check-input") }}
+        {{ subfield.label(class="form-check-label") }}
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if form.journal_type.errors %}
+    {% for error in form.journal_type.errors %}
+    <div class="text-danger">
+      <small>{{ error }}</small>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div style="margin-top: 10px;"></div>
+
+    <div class="row">
+      <div class="col-sm-5">
+        {{ form.scientific_degree.label }}:
+      </div>
+
+      <div class="col-sm-7">
+        {{ form.scientific_degree(class="form-select") }}
+      </div>
+    </div>
+
+    <div style="margin-top: 10px;"></div>
+
+    <div class="row">
+      <div class="col-sm-5">
+        {{ form.impact_factor.label }}:
+      </div>
+
+      <div class="col-sm-7">
+        {% if form.impact_factor.errors %}
+        {{ form.impact_factor(class="form-control is-invalid", placeholder="ضریب تاثیر مجله خود را وارد کنید") }}
+        {% else %}
+        {{ form.impact_factor(class="form-control", placeholder="ضریب تاثیر مجله خود را وارد کنید") }}
+        {% endif %}
+      </div>
+    </div>
+
+    {% for error in form.impact_factor.errors %}
+    <div class="text-danger">
+      <small>{{ error }}</small>
+    </div>
+    {% endfor %}
+
+    <div style="margin-top: 10px;"></div>
+
+    <div class="row">
+      <div class="col-sm-5">
+        {{ form.abstracting_and_indexing.label }}:
+      </div>
+
+      <div class="col-sm-7">
+        {{ form.abstracting_and_indexing(class="form-select") }}
+      </div>
+    </div>
+
+    <div style="margin-top: 10px;"></div>
+
+    <div class="form-group">
+    {{ form.doi.label }}:
+    {% if form.doi.errors %}
+    {{ form.doi(class="form-control is-invalid", placeholder="DOI را وارد کنید") }}
+    {% for error in form.doi.errors %}
+    <div class="invalid-feedback">
+      <span>{{ error }}</span>
+    </div>
+    {% endfor %}
+    {% else %}
+    {{ form.doi(class="form-control", placeholder="DOI را وارد کنید") }}
+    {% endif %}
+  </div>
+
+    <div style="margin-top: 10px;"></div>
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-4">
+          {{ form.indexing_certificate_file.label }}:
+        </div>
+        <div class="col-sm-8">
+          {{ form.indexing_certificate_file(class="form-control-file", aria_describedby="indexing-certificate-file-help") }}
+        </div>
+      </div>
+      <small id="indexing-certificate-file-help" class="form-text text-muted">فرمت تصویر باید JPG یا PNG باشد.</small>
+    </div>
+    {% if form.indexing_certificate_file.errors %}
+    {% for error in form.indexing_certificate_file.errors %}
+    <div class="text-danger">
+      <small>{{ error }}</small>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div style="margin-top: 10px;"></div>
+
+    <div class="row">
+      <div class="col-sm-5">
+        {{ form.authors_count.label }}:
+      </div>
+
+      <div class="col-sm-7">
+        {% if form.authors_count.errors %}
+        {{ form.authors_count(class="form-control is-invalid", placeholder="تعداد نویسندگان را وارد کنید") }}
+        {% else %}
+        {{ form.authors_count(class="form-control", placeholder="تعداد نویسندگان را وارد کنید") }}
+        {% endif %}
+      </div>
+    </div>
+
+    {% for error in form.authors_count.errors %}
+    <div class="text-danger">
+      <small>{{ error }}</small>
+    </div>
+    {% endfor %}
+
+    <div style="margin-top: 10px;"></div>
+
+    <div class="row">
+      <div class="col-sm-5">
+        {{ form.poster_authorship.label }}:
+      </div>
+
+      <div class="col-sm-7">
+        {{ form.poster_authorship(class="form-select") }}
+      </div>
+    </div>
+
+    <div style="margin-top: 10px;"></div>
+
+    <div class="row">
+      <div class="col-sm-5">
+        {{ form.poster_academic_rank.label }}:
+      </div>
+
+      <div class="col-sm-7">
+        {{ form.poster_academic_rank(class="form-select") }}
+      </div>
+    </div>
+
+    <div style="margin-top: 10px;"></div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ form.poster_name.label }}:
+
+        {% if form.poster_name.errors %}
+        {{ form.poster_name(class="form-control is-invalid", placeholder="نام خود را وارد کنید") }}
+        {% for error in form.poster_name.errors %}
+        <div class="invalid-feedback">
+          {{ error }}
+        </div>
+        {% endfor %}
+        {% else %}
+        {{ form.poster_name(class="form-control", placeholder="نام خود را وارد کنید") }}
+        {% endif %}
+      </div>
+
+      <div class="col-sm-6">
+        {{ form.poster_lastname.label }}:
+
+        {% if form.poster_lastname.errors %}
+        {{ form.poster_lastname(class="form-control is-invalid", placeholder="نام خانوادگی خود را وارد کنید") }}
+        {% for error in form.poster_lastname.errors %}
+        <div class="invalid-feedback">
+          {{ error }}
+        </div>
+        {% endfor %}
+        {% else %}
+        {{ form.poster_lastname(class="form-control", placeholder="نام خانوادگی خود را وارد کنید") }}
+        {% endif %}
+      </div>
+    </div>
+
+    <div style="margin-top: 10px;"></div>
+
+    <div class="form-group">
+      {{ form.poster_email.label }}:
+
+      {% if form.poster_email.errors %}
+      {{ form.poster_email(class="form-control is-invalid", placeholder="ایمیل خود را وارد کنید") }}
+      {% for error in form.poster_email.errors %}
+      <div class="invalid-feedback">
+        {{ error }}
+      </div>
+      {% endfor %}
+      {% else %}
+      {{ form.poster_email(class="form-control", placeholder="ایمیل خود را وارد کنید") }}
+      {% endif %}
+    </div>
+
+    <div style="margin-top: 10px;"></div>
+
+    <div class="row">
+      <div class="col-sm-5">
+        {{ form.poster_affiliation.label }}:
+      </div>
+
+      <div class="col-sm-7">
+        {{ form.poster_affiliation(class="form-select") }}
+      </div>
+    </div>
+
+    <div style="margin-top: 10px;"></div>
+
+    <div class="form-group">
+      {{ form.abstract.label }}:
+
+      {% if form.abstract.errors %}
+      {{ form.abstract(class="form-control is-invalid", rows=10) }}
+      {% for error in form.abstract.errors %}
+      <div class="invalid-feedback">
+        {{ error }}
+      </div>
+      {% endfor %}
+      {% else %}
+      {{ form.abstract(class="form-control", rows=10) }}
+      {% endif %}
+    </div>
+
+    <div style="margin-top: 10px;"></div>
+
+    <div class="form-group">
+      {{ form.keywords.label }}:
+
+      {% if form.keywords.errors %}
+      {{ form.keywords(class="form-control is-invalid", placeholder="کلمات کلیدی را وارد کنید") }}
+      {% for error in form.keywords.errors %}
+      <div class="invalid-feedback">
+        {{ error }}
+      </div>
+      {% endfor %}
+      {% else %}
+      {{ form.keywords(class="form-control", placeholder="کلمات کلیدی را وارد کنید (جدا شده با کاما)") }}
+      {% endif %}
+    </div>
+
+    <div style="margin-top: 10px;"></div>
+
+    <div class="row">
+      <div class="col-sm-5">
+        {{ form.scientific_field.label }}:
+      </div>
+
+      <div class="col-sm-7">
+        {{ form.scientific_field(class="form-select") }}
+      </div>
+    </div>
+
+    <div style="margin-top: 10px;"></div>
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-4">
+          {{ form.journal_file.label }}:
+        </div>
+        <div class="col-sm-8">
+          {{ form.journal_file(class="form-control-file", aria_describedby="journal-file-help") }}
+        </div>
+      </div>
+      <small id="journal-file-help" class="form-text text-muted">فرمت فایل باید PDF باشد.</small>
+    </div>
+    {% if form.journal_file.errors %}
+    {% for error in form.journal_file.errors %}
+    <div class="text-danger">
+      <small>{{ error }}</small>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div style="margin-top: 10px;"></div>
+
+    {{ form.submit(class="btn btn-success", style="display: inline-block; width: 100%;") }}
+
+    <div style="margin: 10px;"></div>
+
+    <p class="fw-light text-secondary">برای ثبت مقالات انگلیسی، زبان وبسایت را به انگلیسی تغییر دهید.</p>
+
+  </form>
+</div>
+
+{% endblock %}

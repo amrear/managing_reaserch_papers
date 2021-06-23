@@ -1,0 +1,138 @@
+{% extends "en/base.html" %}
+
+{% block main %}
+<div class="bg-light p-5">
+  {% if post.language == "English" %}
+  <h1>{{ post.title }}</h1>
+  <p class="fw-lighter text-secondary fst-italic">
+    {{ post.poster_name }} {{ post.poster_lastname }},
+
+    {{ post.publish_date.strftime("%b %d %Y") }}
+  </p>
+
+  <div style="margin: 30px;"></div>
+
+  <div class="text-secondary fw-light">
+    <div class="row">
+      <div class="col-md-6">Language: English</div>
+      <div class="col-md-6">Journal type: {{ post.journal_type }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">Scientific degree: {{ post.scientific_degree }}</div>
+      <div class="col-md-6">Impact factor: {{ post.impact_factor }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">Abstracting and indexing: {{ post.abstracting_and_indexing }}</div>
+      <div class="col-md-6">DOI: {{ post.doi }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">Indexing certificate file: <a href="{{ url_for('indexing_certificate_download', id=post.id) }}">Download</a></div>
+      <div class="col-md-6">Number of authors: {{ post.author_count }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">Poster's academic rank: {{ post.poster_academic_rank }}</div>
+      <div class="col-md-6">Poster's authorship: {{ post.poster_authorship }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">Poster's Email: <a href="mailto:{{ post.poster_email }}">{{ post.poster_email }}</a></div>
+      <div class="col-md-6">Poster's affiliation: {{ post.poster_affiliation }}</div>
+      
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">Scientific field: {{ post.scientific_field }}</div>
+    </div>
+    
+  </div>
+
+  <div style="margin: 30px;"></div>
+
+
+  {% for line in abstract %}
+  <p class="lh-base fw-normal">{{ line }}</p>
+  {% endfor %}
+
+  {% if keywords %}
+  <br>
+  {% for keyword in keywords %}
+  <button style="font-size: 12px;" type="button" class="btn btn-secondary btn-sm" disabled>{{ keyword }}</button>
+  {% endfor %}
+  <br>
+  {% endif %}
+
+  {% elif post.language == "Farsi" %}
+
+  <h1 dir="rtl">{{ post.title }}</h1>
+  <p dir="rtl" class="fw-lighter text-secondary fst-italic">
+    {{ post.poster_name }} {{ post.poster_lastname }}،
+
+    {{ post.publish_date.strftime("%b %d %Y") }}
+  </p>
+
+  <div style="margin: 30px;"></div>
+
+  <div class="text-secondary fw-light" dir="rtl">
+    <div class="row">
+      <div class="col-md-6">زبان: فارسی</div>
+      <div class="col-md-6">نوع مقاله: {{ post.journal_type }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">نوع مجله/کنفرانس: {{ post.scientific_degree }}</div>
+      <div class="col-md-6">ضریب تاثیر: {{ post.impact_factor }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">نمایه در بانکهای اطلاعاتی: {{ post.abstracting_and_indexing }}</div>
+      <div class="col-md-6">DOI: {{ post.doi }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">تصویر تایید: <a href="{{ url_for('indexing_certificate_download', id=post.id) }}">دانلود</a></div>
+      <div class="col-md-6">تعداد نویسنده‌ها: {{ post.author_count }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">رتبه علمی منتشر کننده: {{ post.poster_academic_rank }}</div>
+      <div class="col-md-6">نقش نویسنده: {{ post.poster_authorship }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">ایمیل منتشر کننده: <a href="mailto:{{ post.poster_email }}">{{ post.poster_email }}</a></div>
+      <div class="col-md-6">محل اشتغال منتشر کننده: {{ post.poster_affiliation }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">حوزه علمی: {{ post.scientific_field }}</div>
+    </div>
+  </div>
+
+  <div style="margin: 30px;"></div>
+
+  {% for line in abstract %}
+  <p dir="rtl" class="lh-base fw-normal">{{ line }}</p>
+  {% endfor %}
+
+  {% if keywords %}
+  <br>
+  <div dir="rtl">
+    {% for keyword in keywords %}
+    <button style="font-size: 12px;" type="button" class="btn btn-secondary btn-sm" disabled>{{ keyword }}</button>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% endif %}
+
+  <br>
+  <a href="{{ url_for('download', id=post.id) }}">
+    <button type="button" class="btn btn-danger">Download PDF</button>
+  </a>
+</div>
+
+{% endblock %}
